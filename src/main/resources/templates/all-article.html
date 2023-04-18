@@ -7,25 +7,48 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/css/bootstrap.min.css" integrity="sha512-N415hCJJdJx+1UBfULt+i+ihvOn42V/kOjOpp1UTh4CZ70Hx5bDlKryWaqEKfY/8EYOu/C2MuyaluJryK1Lb5Q==" crossorigin="anonymous" />
 
+
+    <style>
+        .article-img img {
+            width: 100px;
+        }
+    </style>
+
 </head>
 <body>
-    <div class="container">
+    <div class="container   mt-5 rounded ">
+        <h3> Article Management System </h3>
 
+        <a  th:href="@{/form-add-article}" class="btn btn-primary"> Add New Post  </a>
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Image </th>
+
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
                 <th scope="col">Author Name</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each=" article :${allArticles}">
                 <th scope="row" th:text="${article.id}"></th>
+                <th class="article-img" scope="row" >
+                    <img src="" th:src="${article.imgUrl}" alt="">
+                </th>
                 <td th:text="${article.title}">Mark</td>
                 <td th:text="${article.description}">Otto</td>
                 <td th:text="${article.author.name}">@mdo</td>
+                <td>
+                    <div>
+                        <a th:href="@{/post/{postID}(postID=${article.id})}" class="btn btn-warning"> View </a>
+<!--                        <a th:href="@{'/post/'+${article.id}}"></a>-->
+                        <button class="btn btn-danger"> Delete</button>
+                    </div>
+
+                </td>
             </tr>
 
             </tbody>
