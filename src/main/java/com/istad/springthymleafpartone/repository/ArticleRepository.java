@@ -28,5 +28,9 @@ public class ArticleRepository {
                 .orElse(null);
     }
 
+    public void addNewArticle(Article article){
+        articleList.add(article);
+    }
+
 
 }

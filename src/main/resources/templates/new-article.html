@@ -1,20 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  lang="en"
+       xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/css/bootstrap.min.css" integrity="sha512-N415hCJJdJx+1UBfULt+i+ihvOn42V/kOjOpp1UTh4CZ70Hx5bDlKryWaqEKfY/8EYOu/C2MuyaluJryK1Lb5Q==" crossorigin="anonymous" />
 </head>
+<style>
+    .profile-section img{
+        width: 300px;
+    }
+
+    .input-section{
+        width: 600px;
+    }
+</style>
 <body>
 
-<div class="container">
+<div class="container mt-5">
 
-    <h1> New Article </h1>
-    <form action="" method="post">
-        <label for="titleInput"> Article Title  </label>
-        <input class="form-control" type="text" id="titleInput">
+    <form th:object="${article}" th:action="@{/handleAddArticle}" method="POST">
+        <div class="d-flex bg-light py-4 rounded justify-content-center ">
+            <div class="profile-section  d-flex flex-column align-items-center">
+                <img id="output-image" src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" alt="profile image ">
+                <input class="form-control" type="file">
+            </div>
+            <div class="input-section ms-3">
+                
+                <h3> New Article </h3>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <label for="articleTitle"> Article Title </label>
+                        <input class="form-control" id="articleTitle" type="text" th:field="*{title}">
+                    </div>
+                    <div>
+                        <label for="authorSelect"> Choose Author</label>
+                        <select id="authorSelect" th:field="*{authorID}"  class="form-select">
+                            <option value="0"> Choose Author </option>
+                            <option th:each="author : ${authors}"  th:value="${author.id}" th:text="${author.name}">One </option>
 
-        <button class="btn btn-success mt-3" type="submit"> Add Article</button>
+                        </select>
+                    </div>
+                    
+                </div>
+              
+                
+                <label for="articleDescription"> Article Description </label>
+                <textarea id="articleDescription" th:field="*{description}" class="form-control "></textarea>
+
+
+                <label for="articleImage"> Article Image </label>
+                <input th:field="*{imgUrl}" class="form-control" id="articleImage" type="text">
+
+                <div class="d-flex justify-content-between mt-2">
+                    <button class="btn btn-warning" type="submit"> Post Article </button>
+                    <button class="btn btn-danger"> Cancel</button>
+                </div>
+
+                
+            </div>
+        </div>
     </form>
 </div>
 

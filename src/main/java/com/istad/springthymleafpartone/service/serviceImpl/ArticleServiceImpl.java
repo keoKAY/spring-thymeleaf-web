@@ -24,4 +24,10 @@ public class ArticleServiceImpl implements ArticleService {
     public Article getArticleByID(int id) {
         return articleRepository.getArticleByID(id);
     }
+
+    @Override
+    public void addNewArticle(Article article) {
+        articleRepository.addNewArticle(article);
+
+    }
 }
