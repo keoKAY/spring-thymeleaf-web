@@ -5,6 +5,7 @@ import com.istad.springthymleafpartone.model.Author;
 import com.istad.springthymleafpartone.model.request.ArticleRequest;
 import com.istad.springthymleafpartone.service.ArticleService;
 import com.istad.springthymleafpartone.service.AuthorService;
+import com.istad.springthymleafpartone.service.FileUploadService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,15 +30,18 @@ public class ArticleController {
 
 
     ArticleService articleService;
+    FileUploadService fileUploadService;
 
     AuthorService authorService;
 
 
     @Autowired
     ArticleController(ArticleService articleService
-            , AuthorService authorService) {
+            , AuthorService authorService,
+                      FileUploadService fileUploadService) {
         this.articleService = articleService;
         this.authorService = authorService;
+        this.fileUploadService = fileUploadService;
     }
 
 
@@ -71,11 +75,20 @@ public class ArticleController {
             return "new-article";
         }
 
+        try{
+            String filenames = fileUploadService.uploadFile(article.getFile());
+
+            System.out.println("Filename is : "+filenames);
+        }catch (Exception ex){
+            System.out.println("Error : "+ex.getMessage());
+        }
+
+
         // mapstruct vs model mapper
         Article newArticle = new Article();
         newArticle.setTitle(article.getTitle());
         newArticle.setDescription(article.getDescription());
-        newArticle.setImgUrl(article.getImgUrl());
+//        newArticle.setImgUrl(article.getImgUrl());
 
         // find the article by ID
         newArticle.setAuthor(authorService.getAllAuthors().stream().filter(e -> e.getId() == article.getAuthorID())
@@ -85,7 +98,7 @@ public class ArticleController {
         // get the max article id and add the value by 1
         newArticle.setId(articleService.getAllArticle().stream().max(Comparator.comparingInt(Article::getId)).stream().toList().get(0).getId()+1);
 
-        articleService.addNewArticle(newArticle);
+//        articleService.addNewArticle(newArticle);
         return "redirect:/all-articles";
     }
 

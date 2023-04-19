@@ -19,11 +19,11 @@
 <body>
 
 <div class="container mt-5">
-    <form th:object="${article}" th:action="@{/handleAddArticle}" method="POST">
+    <form th:object="${article}" th:action="@{/handleAddArticle}" method="POST" enctype="multipart/form-data">
         <div class="d-flex bg-light py-4 rounded justify-content-center ">
             <div class="profile-section  d-flex flex-column align-items-center">
                 <img id="output-image" src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" alt="profile image ">
-                <input class="form-control" type="file">
+                <input class="form-control" name="file" th:field="*{file}" type="file" onchange="loadFile(event)">
             </div>
             <div class="input-section ms-3">
                 
@@ -50,8 +50,7 @@
                 <textarea id="articleDescription" th:field="*{description}" class="form-control "></textarea>
                 <div class="form-text text-danger " th:errors="*{description}"> </div>
 
-                <label for="articleImage"> Article Image </label>
-                <input th:field="*{imgUrl}" class="form-control" id="articleImage" type="text">
+
 
                 <div class="d-flex justify-content-between mt-2">
                     <button class="btn btn-warning" type="submit"> Post Article </button>
@@ -64,6 +63,13 @@
     </form>
 </div>
 
+<script>
+
+    function loadFile(event){
+        let image = document.getElementById('output-image')
+       image.src = URL.createObjectURL( event.target.files[0])
+    }
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta3/js/bootstrap.min.js" integrity="sha512-mp3VeMpuFKbgxm/XMUU4QQUcJX4AZfV5esgX72JQr7H7zWusV6lLP1S78wZnX2z9dwvywil1VHkHZAqfGOW7Nw==" crossorigin="anonymous"></script>
 </body>
 </html>
