@@ -62,13 +62,13 @@ public class ArticleController {
     }
 
     @PostMapping("/handleAddArticle")
-    public String handleAddArticle(@ModelAttribute @Valid ArticleRequest article, BindingResult bindingResult, Model model) {
+    public String handleAddArticle(@Valid @ModelAttribute("article")  ArticleRequest article, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
             System.out.println("Erorr has happened!!!");
-            model.addAttribute("article", new ArticleRequest());
+//            model.addAttribute("article", new ArticleRequest());
             model.addAttribute("authors", authorService.getAllAuthors());
-            return "/new-article";
+            return "new-article";
         }
 
         // mapstruct vs model mapper

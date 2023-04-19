@@ -19,7 +19,6 @@
 <body>
 
 <div class="container mt-5">
-
     <form th:object="${article}" th:action="@{/handleAddArticle}" method="POST">
         <div class="d-flex bg-light py-4 rounded justify-content-center ">
             <div class="profile-section  d-flex flex-column align-items-center">
@@ -33,6 +32,7 @@
                     <div>
                         <label for="articleTitle"> Article Title </label>
                         <input class="form-control" id="articleTitle" type="text" th:field="*{title}">
+                        <div class="form-text text-danger " th:errors="*{title}"> </div>
                     </div>
                     <div>
                         <label for="authorSelect"> Choose Author</label>
@@ -48,7 +48,7 @@
                 
                 <label for="articleDescription"> Article Description </label>
                 <textarea id="articleDescription" th:field="*{description}" class="form-control "></textarea>
-
+                <div class="form-text text-danger " th:errors="*{description}"> </div>
 
                 <label for="articleImage"> Article Image </label>
                 <input th:field="*{imgUrl}" class="form-control" id="articleImage" type="text">
