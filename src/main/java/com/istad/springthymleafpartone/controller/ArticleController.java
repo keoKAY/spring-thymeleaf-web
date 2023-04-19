@@ -5,9 +5,11 @@ import com.istad.springthymleafpartone.model.Author;
 import com.istad.springthymleafpartone.model.request.ArticleRequest;
 import com.istad.springthymleafpartone.service.ArticleService;
 import com.istad.springthymleafpartone.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,8 +62,14 @@ public class ArticleController {
     }
 
     @PostMapping("/handleAddArticle")
-    public String handleAddArticle(@ModelAttribute() ArticleRequest article) {
-        System.out.println("Here is the value of article : " + article);
+    public String handleAddArticle(@ModelAttribute @Valid ArticleRequest article, BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()){
+            System.out.println("Erorr has happened!!!");
+            model.addAttribute("article", new ArticleRequest());
+            model.addAttribute("authors", authorService.getAllAuthors());
+            return "/new-article";
+        }
 
         // mapstruct vs model mapper
         Article newArticle = new Article();
