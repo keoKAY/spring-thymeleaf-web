@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-
     // ModelAndView
     @GetMapping("/index")
     public ModelAndView getHomePage(){
@@ -18,7 +17,6 @@ public class HomeController {
         obj.setViewName("index");
         return obj;
     }
-
    @GetMapping("/registration")
    public String registerForm() {
         return "register-form";

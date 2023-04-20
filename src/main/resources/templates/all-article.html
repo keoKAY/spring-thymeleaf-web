@@ -16,20 +16,59 @@
 
 </head>
 <body>
-    <div class="container   mt-5 rounded ">
-        <h3> Article Management System </h3>
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       Languages
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/all-articles?lang=km}">Khmer</a></li>
+                        <li><a class="dropdown-item" th:href="@{/all-articles?lang=en}">English</a></li>
+                        <li><a class="dropdown-item" th:href="@{/all-articles?lang=ko}">Korean</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container   mt-5 rounded ">
+<!--        <h3> Article Management System </h3>-->
+        <h3> [[#{app.title}]] </h3>
         <a  th:href="@{/form-add-article}" class="btn btn-primary"> Add New Post  </a>
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Image </th>
+                <th scope="col">[[#{col.image}]]</th>
 
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Author Name</th>
-                <th scope="col">Actions</th>
+                <th scope="col">[[#{col.title}]]</th>
+                <th scope="col">[[#{col.description}]]</th>
+                <th scope="col">[[#{col.author}]]</th>
+                <th scope="col">[[#{col.action}]]</th>
             </tr>
             </thead>
             <tbody>

@@ -6,6 +6,7 @@ import com.istad.springthymleafpartone.model.request.ArticleRequest;
 import com.istad.springthymleafpartone.service.ArticleService;
 import com.istad.springthymleafpartone.service.AuthorService;
 import com.istad.springthymleafpartone.service.FileUploadService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,8 +47,9 @@ public class ArticleController {
 
 
     @GetMapping("/all-articles")
-    public String getAllArticle(Model model) {
-        model.addAttribute("allArticles", articleService.getAllArticle());
+    public String getAllArticle(Model model ) {
+        model.addAttribute("allArticles",
+                articleService.getAllArticle());
         return "all-article";
     }
 
@@ -74,18 +76,17 @@ public class ArticleController {
             model.addAttribute("authors", authorService.getAllAuthors());
             return "new-article";
         }
-
+        Article newArticle = new Article();
         try{
-            String filenames = fileUploadService.uploadFile(article.getFile());
+            String filenames ="http://localhost:8080/images/"+ fileUploadService.uploadFile(article.getFile());
 
-            System.out.println("Filename is : "+filenames);
+            newArticle.setImgUrl(filenames);
         }catch (Exception ex){
+            newArticle.setImgUrl("https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png");
             System.out.println("Error : "+ex.getMessage());
         }
 
-
         // mapstruct vs model mapper
-        Article newArticle = new Article();
         newArticle.setTitle(article.getTitle());
         newArticle.setDescription(article.getDescription());
 //        newArticle.setImgUrl(article.getImgUrl());
@@ -98,7 +99,7 @@ public class ArticleController {
         // get the max article id and add the value by 1
         newArticle.setId(articleService.getAllArticle().stream().max(Comparator.comparingInt(Article::getId)).stream().toList().get(0).getId()+1);
 
-//        articleService.addNewArticle(newArticle);
+           articleService.addNewArticle(newArticle);
         return "redirect:/all-articles";
     }
 
